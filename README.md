@@ -1,15 +1,14 @@
 # Problems by [Project Euler]
 
+[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/spiegel-im-spiegel/project-euler/master/LICENSE)
+
+
 - [Project Euler](https://projecteuler.net/)
 
 ## Problems
 
-
-
-
-
-
-
+- [Problem 1](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-1/main.go)
+- [Problem 2](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-2/main.go)
 
 ## Bookmarks
 
