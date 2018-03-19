@@ -21,22 +21,20 @@ func GenPrime() <-chan int64 {
 	ch := make(chan int64)
 	go func() {
 		primes := []int64{2}
-		primesf := []float64{2.0}
 		ch <- 2
 		for n := int64(3); ; n += 2 {
 			pflag := true
-			f := float64(n)
-			for i, p := range primes {
-				if primesf[i] > math.Sqrt(f) {
+			maxPrime := int64(math.Sqrt(float64(n)))
+			for _, p := range primes {
+				if p > maxPrime {
 					break
-				} else if (n % p) == 0 {
+				} else if n%p == 0 {
 					pflag = false
 					break
 				}
 			}
 			if pflag {
 				primes = append(primes, n)
-				primesf = append(primesf, f)
 				ch <- n
 			}
 		}
