@@ -1,14 +1,16 @@
-# Problems by [Project Euler]
+# Solutions to problems in [Project Euler] with Golang.
 
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/spiegel-im-spiegel/project-euler/master/LICENSE)
 
-
-- [Project Euler](https://projecteuler.net/)
+- [Project Euler]
 
 ## Problems
 
+![Profile Image](https://projecteuler.net/profile/spiegel.png)
+
 - [Problem 1](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-1/main.go)
 - [Problem 2](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-2/main.go)
+- [Problem 2](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-3/main.go)
 
 ## Bookmarks
 
