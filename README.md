@@ -8,9 +8,10 @@
 
 ![Profile Image](https://projecteuler.net/profile/spiegel.png)
 
-- [Problem 1](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-1/main.go)
-- [Problem 2](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-2/main.go)
-- [Problem 3](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-3/main.go)
+[Problem 1](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-1/main.go),
+[Problem 2](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-2/main.go),
+[Problem 3](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-3/main.go),
+[Problem 4](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-4/main.go),
 
 ## Bookmarks
 

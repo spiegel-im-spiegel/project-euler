@@ -42,10 +42,7 @@ func answer1(max int64) int64 {
 	var b int64 = 1 // odd
 	c := a + b      // 2 (even)
 	var sum int64 = 0
-	for {
-		if c > max {
-			break
-		}
+	for c <= max {
 		sum += c
 		a = b + c // next (odd)
 		b = c + a // next, next (odd)

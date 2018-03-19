@@ -83,10 +83,7 @@ func answer1(n int64) int64 {
 		if n%factor == 0 {
 			fmt.Println(factor)
 			n /= factor
-			for {
-				if n%factor != 0 {
-					break
-				}
+			for n%factor == 0 {
 				n /= factor
 			}
 			lastFactor = factor
