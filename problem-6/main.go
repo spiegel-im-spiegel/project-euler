@@ -22,6 +22,9 @@ import (
  *   (1 + 2 + ... + 10)^2 = 55^2 = 3025
  * これらの数の差は 3025 - 385 = 2640 となる.
  * 同様にして, 最初の100個の自然数について二乗の和と和の二乗の差を求めよ.
+ *
+ * Contents of Project Euler are licenced under a Creative Commons Licence: Attribution-NonCommercial-ShareAlike 2.0 UK: England & Wales.
+ * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
 func answer0(max int64) int64 {

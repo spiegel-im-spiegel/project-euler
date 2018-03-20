@@ -15,6 +15,9 @@ import (
  * http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%205
  * では, 1 から 20 までの整数全てで割り切れる数字の中で最小の正の数はいくらになるか.
  * では, 3桁の数の積で表される回文数の最大値を求めよ.
+ *
+ * Contents of Project Euler are licenced under a Creative Commons Licence: Attribution-NonCommercial-ShareAlike 2.0 UK: England & Wales.
+ * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
 func answer0(k int64) int64 {

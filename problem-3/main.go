@@ -15,6 +15,9 @@ import (
  * http://odz.sakura.ne.jp/projecteuler/index.php?cmd=read&page=Problem%203
  * 13195 の素因数は 5, 7, 13, 29 である.
  * 600851475143 の素因数のうち最大のものを求めよ.
+ *
+ * Contents of Project Euler are licenced under a Creative Commons Licence: Attribution-NonCommercial-ShareAlike 2.0 UK: England & Wales.
+ * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
 func GenPrime() <-chan int64 {

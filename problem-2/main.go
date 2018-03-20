@@ -15,6 +15,9 @@ import "fmt"
  * フィボナッチ数列の項は前の2つの項の和である. 最初の2項を 1, 2 とすれば, 最初の10項は以下の通りである.
  *  1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
  * 数列の項の値が400万以下の, 偶数値の項の総和を求めよ.
+ *
+ * Contents of Project Euler are licenced under a Creative Commons Licence: Attribution-NonCommercial-ShareAlike 2.0 UK: England & Wales.
+ * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
 func answer0(max int64) int64 {
