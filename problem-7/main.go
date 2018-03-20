@@ -21,59 +21,71 @@ import (
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func GenPrime0() <-chan int64 {
+func GenPrime0(cancel <-chan struct{}) <-chan int64 {
 	ch := make(chan int64)
 	go func() {
+		defer close(ch)
 		primes := []int64{}
 		ch <- 2
 		for n := int64(3); ; n += 2 {
-			if n < 9 {
-				primes = append(primes, n)
-				ch <- n
-			} else if n == 11 || n == 13 {
-				primes = append(primes, n)
-				ch <- n
-			} else if n > 13 {
-				pflag := true
-				rn := int64(math.Sqrt(float64(n)))
-				for _, p := range primes {
-					if p > rn {
-						break
-					} else if n%p == 0 {
-						pflag = false
-						break
-					}
-				}
-				if pflag {
+			select {
+			case <-cancel:
+				return
+			default:
+				if n < 9 {
 					primes = append(primes, n)
 					ch <- n
-				}
-			}
-		}
-	}()
-	return ch
-}
-
-func GenPrime1() <-chan int64 {
-	ch := make(chan int64)
-	go func() {
-		ch <- 2
-		for n := int64(3); ; n += 2 {
-			if n < 4 {
-				ch <- n
-			} else if n < 9 {
-				ch <- n
-			} else if n%3 != 0 {
-				r := int64(math.Sqrt(float64(n)))
-				flag := true
-				for f := int64(5); f <= r; f += 6 {
-					if n%f == 0 || n%(f+2) == 0 {
-						flag = false
-						break
+				} else if n == 11 || n == 13 {
+					primes = append(primes, n)
+					ch <- n
+				} else if n > 13 {
+					pflag := true
+					rn := int64(math.Sqrt(float64(n)))
+					for _, p := range primes {
+						if p > rn {
+							break
+						} else if n%p == 0 {
+							pflag = false
+							break
+						}
+					}
+					if pflag {
+						primes = append(primes, n)
+						ch <- n
 					}
 				}
-				if flag {
+			}
+		}
+	}()
+	return ch
+}
+
+func GenPrime1(cancel <-chan struct{}) <-chan int64 {
+	ch := make(chan int64)
+	go func() {
+		defer close(ch)
+		ch <- 2
+		for n := int64(3); ; n += 2 {
+			select {
+			case <-cancel:
+				return
+			default:
+				if n < 4 {
 					ch <- n
+				} else if n < 9 {
+					ch <- n
+				} else if n%3 != 0 {
+					r := int64(math.Sqrt(float64(n)))
+					flag := true
+					for f := int64(5); f <= r; f += 6 {
+						if n%f == 0 || n%(f+2) == 0 {
+							flag = false
+							break
+						}
+					}
+					if flag {
+						ch <- n
+					}
 				}
 			}
 		}
@@ -81,18 +93,25 @@ func GenPrime1() <-chan int64 {
 	return ch
 }
 
-func answer(order int64, genPrime func() <-chan int64) (int64, time.Duration) {
-	pch := genPrime()
+func answer(order int64, genPrime func(<-chan struct{}) <-chan int64) (int64, time.Duration) {
+	cancel := make(chan struct{}, 1)
+	pch := genPrime(cancel)
+	defer func() {
+		cancel <- struct{}{}
+		<-pch
+	}()
 	i := int64(1)
+	var last int64
 	start := time.Now() // Start
 	for p := range pch {
 		if i == order {
-			goal := time.Now()
-			return p, goal.Sub(start)
+			last = p
+			break
 		}
 		i++
 	}
-	return 0, 0 //unreachable
+	goal := time.Now()
+	return last, goal.Sub(start)
 }
 
 func main() {
