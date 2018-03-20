@@ -13,6 +13,7 @@
 [Problem 3](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-3/main.go),
 [Problem 4](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-4/main.go),
 [Problem 5](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-5/main.go),
+[Problem 6](https://github.com/spiegel-im-spiegel/project-euler/blob/master/problem-6/main.go),
 
 ## Bookmarks
 
