@@ -40,11 +40,11 @@ func answer0(s int64) (a, b, c, m int64) {
 }
 
 func gcd(a, b int64) int64 {
-	if b == 0 {
-		return a
-	}
 	if a < b {
 		a, b = b, a
+	}
+	if b == 0 {
+		return a
 	}
 	return gcd(b, a%b)
 }
