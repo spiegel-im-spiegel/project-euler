@@ -39,10 +39,19 @@ func answer0(s int64) (a, b, c, m int64) {
 	return
 }
 
+func gcd(a, b int64) int64 {
+	if b == 0 {
+		return a
+	}
+	if a < b {
+		a, b = b, a
+	}
+	return gcd(b, a%b)
+}
 func answer1(s int64) (a, b, c, mm int64) {
 	// a = (m^1 - n^2)d, b = 2mnd, c = (m^2 + n^2)d
 	// a + b + c = 2m(m + n)d = 2mkd
-	// k = m + n; m < k < (2m and gcd(m,k))
+	// k = m + n; m < k < 2m and gcd(m,k) = 1
 	s2 := s / 2
 	mmax := int64(math.Ceil(math.Sqrt(float64(s2)))) - 1
 	for m := int64(2); m <= mmax; m++ {
@@ -58,13 +67,15 @@ func answer1(s int64) (a, b, c, mm int64) {
 				k = m + 1
 			}
 			for ; k < 2*m && k <= sm; k += 2 {
-				d := s2 / (k * m)
-				n := k - m
-				a = d * (m*m - n*n)
-				b = 2 * d * m * n
-				c = d * (m*m + n*n)
-				mm = a * b * c
-				return
+				if sm%k == 0 && gcd(k, m) == 1 {
+					d := s2 / (k * m)
+					n := k - m
+					a = d * (m*m - n*n)
+					b = 2 * d * m * n
+					c = d * (m*m + n*n)
+					mm = a * b * c
+					return
+				}
 			}
 		}
 	}
