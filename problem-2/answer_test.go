@@ -1,29 +1,22 @@
 package problem2
 
-import (
-	"reflect"
-	"runtime"
-	"strings"
-	"testing"
-)
-
-type Answer func(int64) int64
+import "testing"
 
 func TestAnswer0(t *testing.T) {
 	testCases := []struct {
 		max, answer int64
-		fnc         Answer
 	}{
-		{max: 4000000, answer: 4613732, fnc: Answer0},
-		{max: 4000000, answer: 4613732, fnc: Answer1},
+		{max: 4000000, answer: 4613732},
 	}
 
 	for _, tc := range testCases {
-		a := tc.fnc(tc.max)
+		a := Answer0(tc.max)
 		if a != tc.answer {
-			fname := runtime.FuncForPC(reflect.ValueOf(tc.fnc).Pointer()).Name()
-			fname = fname[strings.LastIndex(fname, ".")+1:]
-			t.Errorf("%v(%v) = %v, want %v.", fname, tc.max, a, tc.answer)
+			t.Errorf("Answer0(%v) = %v, want %v.", tc.max, a, tc.answer)
+		}
+		a = Answer1(tc.max)
+		if a != tc.answer {
+			t.Errorf("Answer1(%v) = %v, want %v.", tc.max, a, tc.answer)
 		}
 	}
 }
