@@ -1,7 +1,6 @@
-package main
+package problem4
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -20,37 +19,23 @@ import (
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func reverse0(n int) int {
-	r := []rune(strconv.Itoa(n))
-	for i, j := 0, len(r)-1; i < j; i, j = i+1, j-1 {
-		r[i], r[j] = r[j], r[i]
-	}
-	rn, _ := strconv.Atoi(string(r))
-	return rn
-}
-
-func answer0() int {
-	max := 0
-	for n := 100; n <= 999; n++ {
-		for m := n; m <= 999; m++ {
+//Answer0 returns answer to this problem
+func Answer0(min, max int) int {
+	pmax := 0
+	for n := min; n <= max; n++ {
+		for m := n; m <= max; m++ {
 			nm := n * m
-			if nm == reverse0(nm) && nm > max {
-				max = nm
+			//if nm == reverse0(nm) && nm > pmax {
+			if nm == reverse1(nm) && nm > pmax {
+				pmax = nm
 			}
 		}
 	}
-	return max
+	return pmax
 }
 
-func reverse1(n int) int {
-	rn := 0
-	for n > 0 {
-		rn = 10*rn + n%10
-		n /= 10
-	}
-	return rn
-}
-func answer1() int {
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1() int {
 	// P = 100000x + 10000y + 1000z + 100z + 10y + x
 	//   = 100001x + 10010y + 1100z
 	//   = 11 * (9091x + 910y + 100z)
@@ -72,9 +57,21 @@ func answer1() int {
 	return max
 }
 
-func main() {
-	fmt.Println(answer0())
-	fmt.Println(answer1())
+func reverse0(n int) int {
+	r := []rune(strconv.Itoa(n))
+	for i, j := 0, len(r)-1; i < j; i, j = i+1, j-1 {
+		r[i], r[j] = r[j], r[i]
+	}
+	rn, _ := strconv.Atoi(string(r))
+	return rn
+}
+func reverse1(n int) int {
+	rn := 0
+	for n > 0 {
+		rn = 10*rn + n%10
+		n /= 10
+	}
+	return rn
 }
 
 /* Copyright 2018 Spiegel
