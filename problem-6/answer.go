@@ -1,8 +1,4 @@
-package main
-
-import (
-	"fmt"
-)
+package problem6
 
 /**
  * Sum square difference
@@ -27,7 +23,8 @@ import (
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func answer0(max int64) int64 {
+//Answer0 returns answer to this problem
+func Answer0(max int64) int64 {
 	sum1 := int64(0)
 	sum2 := int64(0)
 	for n := int64(1); n <= max; n++ {
@@ -38,16 +35,12 @@ func answer0(max int64) int64 {
 	return sum2 - sum1
 }
 
-func answer1(max int64) int64 {
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(max int64) int64 {
 	sum1 := (2*max + 1) * (max + 1) * max / 6 // 1^2 + 2^2 + ... + max^2
 	sum2 := max * (max + 1) / 2               // (1 + 2 + ... + max)^2 = (max(max+1)/2)^2
 	sum2 *= sum2
 	return sum2 - sum1
-}
-
-func main() {
-	fmt.Println(answer0(100))
-	fmt.Println(answer1(100))
 }
 
 /* Copyright 2018 Spiegel
