@@ -1,6 +1,11 @@
 package problem2
 
-import "testing"
+import (
+	"reflect"
+	"runtime"
+	"strings"
+	"testing"
+)
 
 type Answer func(int64) int64
 
@@ -16,7 +21,9 @@ func TestAnswer0(t *testing.T) {
 	for _, tc := range testCases {
 		a := tc.fnc(tc.max)
 		if a != tc.answer {
-			t.Errorf("Answer0(%v) = %v, want %v.", tc.max, a, tc.answer)
+			fname := runtime.FuncForPC(reflect.ValueOf(tc.fnc).Pointer()).Name()
+			fname = fname[strings.LastIndex(fname, ".")+1:]
+			t.Errorf("%v(%v) = %v, want %v.", fname, tc.max, a, tc.answer)
 		}
 	}
 }
