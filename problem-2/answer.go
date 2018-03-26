@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package problem2
 
 /**
  * Even Fibonacci numbers
@@ -20,7 +18,8 @@ import "fmt"
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func answer0(max int64) int64 {
+//Answer0 returns answer to this problem
+func Answer0(max int64) int64 {
 	var before int64 = 0
 	var current int64 = 1
 	var sum int64 = 0
@@ -38,7 +37,8 @@ func answer0(max int64) int64 {
 	return sum
 }
 
-func answer1(max int64) int64 {
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(max int64) int64 {
 	// 01, 01, 02, 03, 05, 08, 13, 21, 34, ...
 	//  a,  b,  c,  a,  b,  c,  a,  b,  c, ...
 	var a int64 = 1 // odd
@@ -52,11 +52,6 @@ func answer1(max int64) int64 {
 		c = a + b // next, next, next (even)
 	}
 	return sum
-}
-
-func main() {
-	fmt.Println(answer0(4000000))
-	fmt.Println(answer1(4000000))
 }
 
 /* Copyright 2018 Spiegel

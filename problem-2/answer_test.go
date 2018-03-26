@@ -1,18 +1,16 @@
-package problem1
+package problem2
 
 import "testing"
 
-type Answer func(int) int
+type Answer func(int64) int64
 
-func TestAnswer(t *testing.T) {
+func TestAnswer0(t *testing.T) {
 	testCases := []struct {
-		max, answer int
+		max, answer int64
 		fnc         Answer
 	}{
-		{max: 10, answer: 23, fnc: Answer0},
-		{max: 1000, answer: 233168, fnc: Answer0},
-		{max: 10, answer: 23, fnc: Answer1},
-		{max: 1000, answer: 233168, fnc: Answer1},
+		{max: 4000000, answer: 4613732, fnc: Answer0},
+		{max: 4000000, answer: 4613732, fnc: Answer1},
 	}
 
 	for _, tc := range testCases {
