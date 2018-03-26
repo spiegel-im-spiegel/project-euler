@@ -1,7 +1,6 @@
-package main
+package problem3
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -20,39 +19,21 @@ import (
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func GenPrime() <-chan int64 {
-	ch := make(chan int64)
-	go func() {
-		primes := []int64{2}
-		ch <- 2
-		for n := int64(3); ; n += 2 {
-			pflag := true
-			maxPrime := int64(math.Sqrt(float64(n)))
-			for _, p := range primes {
-				if p > maxPrime {
-					break
-				} else if n%p == 0 {
-					pflag = false
-					break
-				}
-			}
-			if pflag {
-				primes = append(primes, n)
-				ch <- n
-			}
-		}
+//Answer0 returns answer to this problem
+func Answer0(n int64) int64 {
+	cancel := make(chan struct{}, 1)
+	pch := genPrime(cancel)
+	defer func() {
+		cancel <- struct{}{}
+		<-pch
 	}()
-	return ch
-}
-func answer0(n int64) int64 {
-	pch := GenPrime()
-	var max int64 = 0
+	var max int64
 	for p := range pch {
 		if n < p {
 			break
 		}
 		if n%p == 0 {
-			fmt.Println(p)
+			//fmt.Println(p)
 			max = p
 			for {
 				if n%p != 0 {
@@ -64,19 +45,53 @@ func answer0(n int64) int64 {
 	}
 	return max
 }
-
-func GenFactor() <-chan int64 {
+func genPrime(cancel <-chan struct{}) <-chan int64 {
 	ch := make(chan int64)
 	go func() {
+		defer close(ch)
+		primes := []int64{}
 		ch <- 2
 		for n := int64(3); ; n += 2 {
-			ch <- n
+			select {
+			case <-cancel:
+				return
+			default:
+				if n < 9 {
+					primes = append(primes, n)
+					ch <- n
+				} else if n == 11 || n == 13 {
+					primes = append(primes, n)
+					ch <- n
+				} else if n > 13 {
+					pflag := true
+					rn := int64(math.Sqrt(float64(n)))
+					for _, p := range primes {
+						if p > rn {
+							break
+						} else if n%p == 0 {
+							pflag = false
+							break
+						}
+					}
+					if pflag {
+						primes = append(primes, n)
+						ch <- n
+					}
+				}
+			}
 		}
 	}()
 	return ch
 }
-func answer1(n int64) int64 {
-	fch := GenFactor()
+
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(n int64) int64 {
+	cancel := make(chan struct{}, 1)
+	fch := genFactor(cancel)
+	defer func() {
+		cancel <- struct{}{}
+		<-fch
+	}()
 	lastFactor := int64(1)
 	maxFactor := int64(math.Sqrt(float64(n)))
 	for factor := range fch {
@@ -84,7 +99,7 @@ func answer1(n int64) int64 {
 			break
 		}
 		if n%factor == 0 {
-			fmt.Println(factor)
+			//fmt.Println(factor)
 			n /= factor
 			for n%factor == 0 {
 				n /= factor
@@ -98,10 +113,21 @@ func answer1(n int64) int64 {
 	}
 	return n
 }
-
-func main() {
-	fmt.Println("Largest prime:", answer0(600851475143))
-	fmt.Println("Largest prime:", answer1(600851475143))
+func genFactor(cancel <-chan struct{}) <-chan int64 {
+	ch := make(chan int64)
+	go func() {
+		defer close(ch)
+		ch <- 2
+		for n := int64(3); ; n += 2 {
+			select {
+			case <-cancel:
+				return
+			default:
+				ch <- n
+			}
+		}
+	}()
+	return ch
 }
 
 /* Copyright 2018 Spiegel
