@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package problem1
 
 /**
  * Multiples of 3 and 5
@@ -17,9 +15,10 @@ import "fmt"
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func answer0(max int) int {
+//Answer0 returns answer to this problem
+func Answer0(max int) int {
 	sum := 0
-	for n := 1; n <= max; n++ {
+	for n := 1; n < max; n++ {
 		if (n%3) == 0 || (n%5) == 0 {
 			sum += n
 		}
@@ -27,17 +26,14 @@ func answer0(max int) int {
 	return sum
 }
 
-func sumDivisibleBy(max, n int) int {
-	m := max / n
-	return n * (m * (m + 1)) / 2
-}
-func answer1(max int) int {
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(max int) int {
 	return sumDivisibleBy(max, 3) + sumDivisibleBy(max, 5) - sumDivisibleBy(max, 3*5)
 }
 
-func main() {
-	fmt.Println(answer0(999))
-	fmt.Println(answer1(999))
+func sumDivisibleBy(max, n int) int {
+	m := (max - 1) / n
+	return n * (m * (m + 1)) / 2
 }
 
 /* Copyright 2018 Spiegel
