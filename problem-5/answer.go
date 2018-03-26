@@ -1,7 +1,6 @@
-package main
+package problem5
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -20,7 +19,8 @@ import (
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func answer0(k int64) int64 {
+//Answer0 returns answer to this problem
+func Answer0(k int64) int64 {
 	max := int64(1)
 	for n := k; n > 1; n-- {
 		if max%n != 0 {
@@ -43,26 +43,8 @@ func answer0(k int64) int64 {
 	return min
 }
 
-func primeList(k int64) []int64 {
-	primes := []int64{2}
-	for n := int64(3); n <= k; n += 2 {
-		pflag := true
-		maxPrime := int64(math.Sqrt(float64(n)))
-		for _, p := range primes {
-			if p > maxPrime {
-				break
-			} else if n%p == 0 {
-				pflag = false
-				break
-			}
-		}
-		if pflag {
-			primes = append(primes, n)
-		}
-	}
-	return primes
-}
-func answer1(k int64) int64 {
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(k int64) int64 {
 	rk := int64(math.Sqrt(float64(k)))
 	lk := math.Log(float64(k))
 	flag := true
@@ -81,9 +63,26 @@ func answer1(k int64) int64 {
 	}
 	return n
 }
-func main() {
-	fmt.Println(answer0(20))
-	fmt.Println(answer1(20))
+func primeList(k int64) []int64 {
+	//primes := []int64{2}
+	primes := make([]int64, 1, int(k))
+	primes[0] = 2
+	for n := int64(3); n <= k; n += 2 {
+		pflag := true
+		maxPrime := int64(math.Sqrt(float64(n)))
+		for _, p := range primes {
+			if p > maxPrime {
+				break
+			} else if n%p == 0 {
+				pflag = false
+				break
+			}
+		}
+		if pflag {
+			primes = append(primes, n)
+		}
+	}
+	return primes
 }
 
 /* Copyright 2018 Spiegel
