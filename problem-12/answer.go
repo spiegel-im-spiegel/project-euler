@@ -48,6 +48,28 @@ func Answer0(limit int64) int64 {
 	}
 	return tn
 }
+
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(limit int64) int64 {
+	for n := int64(1); ; n++ {
+		tn := n * (n + 1) / 2
+		//fmt.Println(n)
+		rtn := int64(math.Sqrt(float64(tn)))
+		ct := int64(0)
+		for i := int64(1); i <= rtn; i++ {
+			if tn%i == 0 {
+				ct += 2
+			}
+		}
+		if rtn*rtn == tn {
+			ct--
+		}
+		if ct > limit {
+			return tn
+		}
+	}
+}
+
 func genTriangularNumber(cancel <-chan struct{}) <-chan int64 {
 	ch := make(chan int64)
 	go func() {

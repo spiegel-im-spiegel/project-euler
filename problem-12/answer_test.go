@@ -15,10 +15,10 @@ func TestAnswer0(t *testing.T) {
 		if a != tc.answer {
 			t.Errorf("Answer0(%v) = %v, want %v.", tc.limit, a, tc.answer)
 		}
-		// a = Answer1(tc.limit)
-		// if a != tc.answer {
-		// 	t.Errorf("Answer1(%v) = %v, want %v.", tc.limit, a, tc.answer)
-		// }
+		a = Answer1(tc.limit)
+		if a != tc.answer {
+			t.Errorf("Answer1(%v) = %v, want %v.", tc.limit, a, tc.answer)
+		}
 	}
 }
 
@@ -28,11 +28,11 @@ func BenchmarkAnswer0(b *testing.B) {
 	}
 }
 
-// func BenchmarkAnswer1(b *testing.B) {
-// 	for i := 0; i < b.N; i++ {
-// 		_ = Answer1(2000000)
-// 	}
-// }
+func BenchmarkAnswer1(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_ = Answer1(500)
+	}
+}
 
 /* Copyright 2018 Spiegel
  *
