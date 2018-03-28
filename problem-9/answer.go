@@ -1,7 +1,6 @@
-package main
+package problem9
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -26,29 +25,22 @@ import (
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func answer0(s int64) (a, b, c, m int64) {
-	for a = 1; a < (s-3)/3; a++ {
-		for b = a + 1; b < (s-a-1)/2; b++ {
-			c = 1000 - a - b
+//Answer0 returns answer to this problem
+func Answer0(s int64) int64 {
+	for a := int64(1); a < (s-3)/3; a++ {
+		for b := a + 1; b < (s-a-1)/2; b++ {
+			c := 1000 - a - b
 			if a*a+b*b == c*c {
-				m = a * b * c
-				return
+				//fmt.Println(a, b, c, a*b*c)
+				return a * b * c
 			}
 		}
 	}
-	return
+	return 0
 }
 
-func gcd(a, b int64) int64 {
-	if a < b {
-		a, b = b, a
-	}
-	if b == 0 {
-		return a
-	}
-	return gcd(b, a%b)
-}
-func answer1(s int64) (a, b, c, mm int64) {
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(s int64) int64 {
 	// a = (m^1 - n^2)d, b = 2mnd, c = (m^2 + n^2)d
 	// a + b + c = 2m(m + n)d = 2mkd
 	// k = m + n; m < k < 2m and gcd(m,k) = 1
@@ -70,21 +62,25 @@ func answer1(s int64) (a, b, c, mm int64) {
 				if sm%k == 0 && gcd(k, m) == 1 {
 					d := s2 / (k * m)
 					n := k - m
-					a = d * (m*m - n*n)
-					b = 2 * d * m * n
-					c = d * (m*m + n*n)
-					mm = a * b * c
-					return
+					a := d * (m*m - n*n)
+					b := 2 * d * m * n
+					c := d * (m*m + n*n)
+					//fmt.Println(a, b, c, a*b*c)
+					return a * b * c
 				}
 			}
 		}
 	}
-	return
+	return 0
 }
-
-func main() {
-	fmt.Println(answer0(1000))
-	fmt.Println(answer1(1000))
+func gcd(a, b int64) int64 {
+	if a < b {
+		a, b = b, a
+	}
+	if b == 0 {
+		return a
+	}
+	return gcd(b, a%b)
 }
 
 /* Copyright 2018 Spiegel
