@@ -1,9 +1,4 @@
-package main
-
-import (
-	"fmt"
-	"time"
-)
+package problem11
 
 /**
  * Largest product in a grid
@@ -85,9 +80,9 @@ var matrix = [][]int64{
 	{01, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 01, 89, 19, 67, 48},
 }
 
-func answer0() (int64, time.Duration) {
+//Answer0 returns answer to this problem
+func Answer0() int64 {
 	max := int64(0)
-	start := time.Now() // Start
 	for r := 0; r < len(matrix); r++ {
 		for c := 0; c < len(matrix[r]); c++ {
 			if r >= 3 && c < len(matrix[r])-3 {
@@ -120,13 +115,13 @@ func answer0() (int64, time.Duration) {
 			}
 		}
 	}
-	goal := time.Now()
-	return max, goal.Sub(start)
+	return max
 }
 
-func main() {
-	fmt.Println(answer0())
-}
+// //Answer1 returns answer to this problem (refactoring version)
+// func Answer1() int64 {
+// 	return 0
+// }
 
 /* Copyright 2018 Spiegel
  *
