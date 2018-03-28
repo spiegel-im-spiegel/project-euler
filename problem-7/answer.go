@@ -1,9 +1,7 @@
-package main
+package problem7
 
 import (
-	"fmt"
 	"math"
-	"time"
 )
 
 /**
@@ -21,7 +19,10 @@ import (
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func GenPrime0(cancel <-chan struct{}) <-chan int64 {
+//GenPrime is function type for generatting prime numbers
+type GenPrime func(<-chan struct{}) <-chan int64
+
+func genPrime0(cancel <-chan struct{}) <-chan int64 {
 	ch := make(chan int64)
 	go func() {
 		defer close(ch)
@@ -60,7 +61,7 @@ func GenPrime0(cancel <-chan struct{}) <-chan int64 {
 	return ch
 }
 
-func GenPrime1(cancel <-chan struct{}) <-chan int64 {
+func genPrime1(cancel <-chan struct{}) <-chan int64 {
 	ch := make(chan int64)
 	go func() {
 		defer close(ch)
@@ -93,16 +94,16 @@ func GenPrime1(cancel <-chan struct{}) <-chan int64 {
 	return ch
 }
 
-func answer(order int64, genPrime func(<-chan struct{}) <-chan int64) (int64, time.Duration) {
+//Answer returns answer to this problem
+func Answer(order int64, gen GenPrime) int64 {
 	cancel := make(chan struct{}, 1)
-	pch := genPrime(cancel)
+	pch := gen(cancel)
 	defer func() {
 		cancel <- struct{}{}
 		<-pch
 	}()
 	i := int64(1)
 	var last int64
-	start := time.Now() // Start
 	for p := range pch {
 		if i == order {
 			last = p
@@ -110,15 +111,7 @@ func answer(order int64, genPrime func(<-chan struct{}) <-chan int64) (int64, ti
 		}
 		i++
 	}
-	goal := time.Now()
-	return last, goal.Sub(start)
-}
-
-func main() {
-	fmt.Println(answer(10001, GenPrime0))
-	fmt.Println(answer(10001, GenPrime1))
-	fmt.Println(answer(1000001, GenPrime0))
-	fmt.Println(answer(1000001, GenPrime1))
+	return last
 }
 
 /* Copyright 2018 Spiegel
