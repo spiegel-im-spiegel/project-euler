@@ -1,9 +1,7 @@
-package main
+package problem10
 
 import (
-	"fmt"
 	"math"
-	"time"
 )
 
 /**
@@ -21,7 +19,24 @@ import (
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-func GenPrime0(cancel <-chan struct{}) <-chan int64 {
+//Answer0 returns answer to this problem
+func Answer0(limit int64) int64 {
+	cancel := make(chan struct{}, 1)
+	pch := genPrime0(cancel)
+	defer func() {
+		cancel <- struct{}{}
+		<-pch
+	}()
+	sum := int64(0)
+	for p := range pch {
+		if p > limit {
+			break
+		}
+		sum += p
+	}
+	return sum
+}
+func genPrime0(cancel <-chan struct{}) <-chan int64 {
 	ch := make(chan int64)
 	go func() {
 		defer close(ch)
@@ -59,27 +74,19 @@ func GenPrime0(cancel <-chan struct{}) <-chan int64 {
 	}()
 	return ch
 }
-func answer0(limit int64) (int64, time.Duration) {
-	cancel := make(chan struct{}, 1)
-	pch := GenPrime0(cancel)
-	defer func() {
-		cancel <- struct{}{}
-		<-pch
-	}()
+
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(limit int64) int64 {
 	sum := int64(0)
-	start := time.Now() // Start
+	pch := genPrime1(limit)
 	for p := range pch {
-		if p > limit {
-			break
-		}
 		sum += p
 	}
-	goal := time.Now()
-	return sum, goal.Sub(start)
+	return sum
 }
 
-//The sieve of Eratosthenes
-func GenPrime1(limit int64) <-chan int64 {
+//genPrime1 is the Sieve of Eratosthenes
+func genPrime1(limit int64) <-chan int64 {
 	sievebound := (limit - 1) / 2
 	sieve := make([]bool, sievebound+1)
 	sieve[0] = true
@@ -107,21 +114,6 @@ func GenPrime1(limit int64) <-chan int64 {
 		}
 	}()
 	return ch
-}
-func answer1(limit int64) (int64, time.Duration) {
-	sum := int64(0)
-	start := time.Now() // Start
-	pch := GenPrime1(limit)
-	for p := range pch {
-		sum += p
-	}
-	goal := time.Now()
-	return sum, goal.Sub(start)
-}
-
-func main() {
-	fmt.Println(answer0(2000000))
-	fmt.Println(answer1(2000000))
 }
 
 /* Copyright 2018 Spiegel
