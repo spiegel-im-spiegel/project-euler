@@ -1,9 +1,4 @@
-package main
-
-import (
-	"fmt"
-	"time"
-)
+package problem8
 
 /**
  * Largest product in a series
@@ -83,55 +78,40 @@ var prog = []byte{
 	7, 1, 6, 3, 6, 2, 6, 9, 5, 6, 1, 8, 8, 2, 6, 7, 0, 4, 2, 8, 2, 5, 2, 4, 8, 3, 6, 0, 0, 8, 2, 3, 2, 5, 7, 5, 3, 0, 4, 2, 0, 7, 5, 2, 9, 6, 3, 4, 5, 0,
 }
 
-func answer0(digit int) (int64, string, time.Duration) {
+//Answer0 returns answer to this problem
+func Answer0(digit int) int64 {
 	l := len(prog)
 	var max int64 = 0
-	var maxStr string
-	start := time.Now() // Start
 	for i := 0; i < l-digit; i++ {
 		var mul int64 = 1
-		r := make([]byte, digit)
-		for n, p := range prog[i : i+digit] {
+		for _, p := range prog[i : i+digit] {
 			mul *= int64(p)
-			r[n] = '0' + p
 		}
 		if max < mul {
 			max = mul
-			maxStr = string(r)
 		}
 	}
-	goal := time.Now()
-	return max, maxStr, goal.Sub(start)
+	return max
 }
 
-func answer1(digit int) (int64, string, time.Duration) {
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(digit int) int64 {
 	l := len(prog)
 	var max int64 = 0
-	var maxStr string
-	start := time.Now() // Start
 	for i := 0; i < l-digit; i++ {
 		var mul int64 = 1
-		r := make([]byte, digit)
-		for n, p := range prog[i : i+digit] {
+		for _, p := range prog[i : i+digit] {
 			if p == 0 {
 				mul = 0
 				break
 			}
 			mul *= int64(p)
-			r[n] = '0' + p
 		}
 		if max < mul {
 			max = mul
-			maxStr = string(r)
 		}
 	}
-	goal := time.Now()
-	return max, maxStr, goal.Sub(start)
-}
-
-func main() {
-	fmt.Println(answer0(13))
-	fmt.Println(answer1(13))
+	return max
 }
 
 /* Copyright 2018 Spiegel
