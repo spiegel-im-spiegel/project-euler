@@ -19,9 +19,38 @@ import (
  * http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
  */
 
-//GenPrime is function type for generatting prime numbers
 type GenPrime func(<-chan struct{}) <-chan int64
 
+//Answer0 returns answer to this problem
+func Answer0(order int64) int64 {
+	return answer(order, genPrime0)
+}
+
+//Answer1 returns answer to this problem (refactoring version)
+func Answer1(order int64) int64 {
+	return answer(order, genPrime1)
+}
+
+func answer(order int64, gen GenPrime) int64 {
+	cancel := make(chan struct{}, 1)
+	pch := gen(cancel)
+	defer func() {
+		cancel <- struct{}{}
+		<-pch
+	}()
+	i := int64(1)
+	var last int64
+	for p := range pch {
+		if i == order {
+			last = p
+			break
+		}
+		i++
+	}
+	return last
+}
+
+//GenPrime is function type for generatting prime numbers
 func genPrime0(cancel <-chan struct{}) <-chan int64 {
 	ch := make(chan int64)
 	go func() {
@@ -92,26 +121,6 @@ func genPrime1(cancel <-chan struct{}) <-chan int64 {
 		}
 	}()
 	return ch
-}
-
-//Answer returns answer to this problem
-func Answer(order int64, gen GenPrime) int64 {
-	cancel := make(chan struct{}, 1)
-	pch := gen(cancel)
-	defer func() {
-		cancel <- struct{}{}
-		<-pch
-	}()
-	i := int64(1)
-	var last int64
-	for p := range pch {
-		if i == order {
-			last = p
-			break
-		}
-		i++
-	}
-	return last
 }
 
 /* Copyright 2018 Spiegel

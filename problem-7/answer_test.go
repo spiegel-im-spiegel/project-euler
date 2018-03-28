@@ -11,26 +11,26 @@ func TestAnswer0(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		a := Answer(tc.order, genPrime0)
+		a := Answer0(tc.order)
 		if a != tc.answer {
-			t.Errorf("Answer(%v, genPrime0) = %v, want %v.", tc.order, a, tc.answer)
+			t.Errorf("Answer0(%v) = %v, want %v.", tc.order, a, tc.answer)
 		}
-		a = Answer(tc.order, genPrime1)
+		a = Answer1(tc.order)
 		if a != tc.answer {
-			t.Errorf("Answer(%v, genPrime1) = %v, want %v.", tc.order, a, tc.answer)
+			t.Errorf("Answer1(%v) = %v, want %v.", tc.order, a, tc.answer)
 		}
 	}
 }
 
 func BenchmarkAnswer0(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_ = Answer(1000001, genPrime0)
+		_ = Answer0(1000001)
 	}
 }
 
 func BenchmarkAnswer1(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_ = Answer(1000001, genPrime1)
+		_ = Answer1(1000001)
 	}
 }
 
