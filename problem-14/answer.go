@@ -1,4 +1,4 @@
-package problem13
+package problem14
 
 /**
  * Longest Collatz sequence
