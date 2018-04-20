@@ -25,11 +25,7 @@ func Answer0(grid int64) int64 {
 	return (&big.Int{}).Div(fg2, fgfg).Int64()
 }
 func factorial0(n int64) *big.Int {
-	fn := big.NewInt(n)
-	for i := n - 1; i > 1; i-- {
-		fn = (&big.Int{}).Mul(fn, big.NewInt(i))
-	}
-	return fn
+	return (&big.Int{}).MulRange(1, n)
 }
 
 //Answer1 returns answer to this problem (refactoring version)
@@ -37,11 +33,7 @@ func Answer1(grid int64) int64 {
 	return (&big.Int{}).Div(factorial1(2*grid, grid), factorial1(grid, 0)).Int64()
 }
 func factorial1(max, min int64) *big.Int {
-	fn := big.NewInt(max)
-	for i := max - 1; i > min; i-- {
-		fn = (&big.Int{}).Mul(fn, big.NewInt(i))
-	}
-	return fn
+	return (&big.Int{}).MulRange(min+1, max)
 }
 
 /* Copyright 2018 Spiegel
